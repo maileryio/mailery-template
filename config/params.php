@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /**
- * Template module for Mailery Platform
- * @link      https://github.com/maileryio/mailery-template
- * @package   Mailery\Template
+ * Message module for Mailery Platform
+ * @link      https://github.com/maileryio/mailery-message
+ * @package   Mailery\Message
  * @license   BSD-3-Clause
  * @copyright Copyright (c) 2020, Mailery (https://mailery.io/)
  */

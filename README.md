@@ -1,14 +1,14 @@
-# Template module for Mailery Platform
+# Message module for Mailery Platform
 
-**Template module for Mailery Platform**
+**Message module for Mailery Platform**
 
-[![Latest Stable Version](https://poser.pugx.org/maileryio/mailery-template/v/stable)](https://packagist.org/packages/maileryio/mailery-template)
-[![Total Downloads](https://poser.pugx.org/maileryio/mailery-template/downloads)](https://packagist.org/packages/maileryio/mailery-template)
-[![Build Status](https://travis-ci.com/maileryio/mailery-template.svg?branch=master)](https://travis-ci.com/maileryio/mailery-template)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/maileryio/mailery-template.svg)](https://scrutinizer-ci.com/g/maileryio/mailery-template/)
-[![Scrutinizer Code Coverage](https://img.shields.io/scrutinizer/coverage/g/maileryio/mailery-template.svg)](https://scrutinizer-ci.com/g/maileryio/mailery-template/)
+[![Latest Stable Version](https://poser.pugx.org/maileryio/mailery-message/v/stable)](https://packagist.org/packages/maileryio/mailery-message)
+[![Total Downloads](https://poser.pugx.org/maileryio/mailery-message/downloads)](https://packagist.org/packages/maileryio/mailery-message)
+[![Build Status](https://travis-ci.com/maileryio/mailery-message.svg?branch=master)](https://travis-ci.com/maileryio/mailery-message)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/maileryio/mailery-message.svg)](https://scrutinizer-ci.com/g/maileryio/mailery-message/)
+[![Scrutinizer Code Coverage](https://img.shields.io/scrutinizer/coverage/g/maileryio/mailery-message.svg)](https://scrutinizer-ci.com/g/maileryio/mailery-message/)
 
-Template module for Mailery Platform
+Message module for Mailery Platform
 
 ## Installation
 
@@ -17,13 +17,13 @@ The preferred way to install this library is through [composer](http://getcompos
 Either run
 
 ```sh
-php composer.phar require "maileryio/mailery-template"
+php composer.phar require "maileryio/mailery-message"
 ```
 
 or add
 
 ```json
-"maileryio/mailery-template": "*"
+"maileryio/mailery-message": "*"
 ```
 
 to the require section of your composer.json.

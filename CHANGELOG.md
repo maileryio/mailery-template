@@ -1,4 +1,4 @@
-# Mailery Email Message Change Log
+# Mailery Message Change Log
 
 ## 1.0.0 under development
 

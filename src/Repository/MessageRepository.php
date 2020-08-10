@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Mailery\Message\Repository;
+namespace Mailery\Template\Repository;
 
 use Cycle\ORM\Select\QueryBuilder;
 use Cycle\ORM\Select\Repository;
 use Mailery\Brand\Entity\Brand;
-use Mailery\Message\Entity\Message;
+use Mailery\Template\Entity\Template;
 use Mailery\Widget\Search\Data\Reader\SelectDataReader;
 
-class MessageRepository extends Repository
+class TemplateRepository extends Repository
 {
     /**
      * @param array $scope
@@ -38,16 +38,16 @@ class MessageRepository extends Repository
     }
 
     /**
-     * @param string $name
-     * @param Message|null $exclude
-     * @return Message|null
+     * @param string $subject
+     * @param Template|null $exclude
+     * @return Template|null
      */
-    public function findByName(string $name, ?Message $exclude = null): ?Message
+    public function findBySubject(string $subject, ?Template $exclude = null): ?Template
     {
         return $this
             ->select()
-            ->where(function (QueryBuilder $select) use ($name, $exclude) {
-                $select->where('name', $name);
+            ->where(function (QueryBuilder $select) use ($subject, $exclude) {
+                $select->where('subject', $subject);
 
                 if ($exclude !== null) {
                     $select->where('id', '<>', $exclude->getId());

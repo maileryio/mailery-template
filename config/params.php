@@ -3,60 +3,64 @@
 declare(strict_types=1);
 
 /**
- * Message module for Mailery Platform
- * @link      https://github.com/maileryio/mailery-message
- * @package   Mailery\Message
+ * Template module for Mailery Platform
+ * @link      https://github.com/maileryio/mailery-template
+ * @package   Mailery\Template
  * @license   BSD-3-Clause
  * @copyright Copyright (c) 2020, Mailery (https://mailery.io/)
  */
 
 use Mailery\Menu\MenuItem;
-use Mailery\Message\Controller\MessageController;
+use Mailery\Template\Controller\TemplateController;
 use Opis\Closure\SerializableClosure;
 use Yiisoft\Router\Route;
 use Yiisoft\Router\UrlGeneratorInterface;
 
 return [
+    'maileryio/mailery-template' => [
+        'types' => [],
+    ],
+
     'yiisoft/yii-cycle' => [
         'annotated-entity-paths' => [
-            '@vendor/maileryio/mailery-message/src/Entity',
+            '@vendor/maileryio/mailery-template/src/Entity',
         ],
     ],
 
     'router' => [
         'routes' => [
-            // Messages:
-            '/message/message/index' => Route::get('/brand/{brandId:\d+}/messages', [MessageController::class, 'index'])
-                ->name('/message/message/index'),
-            '/message/message/view' => Route::get('/brand/{brandId:\d+}/message/message/view/{id:\d+}', [MessageController::class, 'view'])
-                ->name('/message/message/view'),
-            '/message/message/create' => Route::methods(['GET', 'POST'], '/brand/{brandId:\d+}/message/message/create', [MessageController::class, 'create'])
-                ->name('/message/message/create'),
-            '/message/message/edit' => Route::methods(['GET', 'POST'], '/brand/{brandId:\d+}/message/message/edit/{id:\d+}', [MessageController::class, 'edit'])
-                ->name('/message/message/edit'),
-            '/message/message/delete' => Route::delete('/brand/{brandId:\d+}/message/message/delete/{id:\d+}', [MessageController::class, 'delete'])
-                ->name('/message/message/delete'),
+            // Templates:
+            '/template/template/index' => Route::get('/brand/{brandId:\d+}/templates', [TemplateController::class, 'index'])
+                ->name('/template/template/index'),
+            '/template/template/view' => Route::get('/brand/{brandId:\d+}/template/template/view/{id:\d+}', [TemplateController::class, 'view'])
+                ->name('/template/template/view'),
+            '/template/template/create' => Route::methods(['GET', 'POST'], '/brand/{brandId:\d+}/template/template/create', [TemplateController::class, 'create'])
+                ->name('/template/template/create'),
+            '/template/template/edit' => Route::methods(['GET', 'POST'], '/brand/{brandId:\d+}/template/template/edit/{id:\d+}', [TemplateController::class, 'edit'])
+                ->name('/template/template/edit'),
+            '/template/template/delete' => Route::delete('/brand/{brandId:\d+}/template/template/delete/{id:\d+}', [TemplateController::class, 'delete'])
+                ->name('/template/template/delete'),
         ],
     ],
 
     'menu' => [
         'sidebar' => [
             'items' => [
-                'messages' => (new MenuItem())
-                    ->withLabel('Messages')
+                'templates' => (new MenuItem())
+                    ->withLabel('Templates')
                     ->withIcon('email-multiple-outline')
                     ->withChildItems([
-                        'messages' => (new MenuItem())
-                            ->withLabel('All Messages')
+                        'templates' => (new MenuItem())
+                            ->withLabel('All Templates')
                             ->withUrl(new SerializableClosure(function (UrlGeneratorInterface $urlGenerator) {
-                                return $urlGenerator->generate('/message/message/index');
+                                return $urlGenerator->generate('/template/template/index');
                             }))
                             ->withActiveRouteNames([
-                                '/message/message/index',
-                                '/message/message/view',
-                                '/message/message/create',
-                                '/message/message/edit',
-                                '/message/message/delete',
+                                '/template/template/index',
+                                '/template/template/view',
+                                '/template/template/create',
+                                '/template/template/edit',
+                                '/template/template/delete',
                             ])
                             ->withOrder(100),
                     ])

@@ -3,31 +3,26 @@
 declare(strict_types=1);
 
 /**
- * Message module for Mailery Platform
- * @link      https://github.com/maileryio/mailery-message
- * @package   Mailery\Message
+ * Template module for Mailery Platform
+ * @link      https://github.com/maileryio/mailery-template
+ * @package   Mailery\Template
  * @license   BSD-3-Clause
  * @copyright Copyright (c) 2020, Mailery (https://mailery.io/)
  */
 
-namespace Mailery\Message\Entity;
+namespace Mailery\Template\Entity;
 
-use Mailery\Activity\Log\Entity\LoggableEntityInterface;
-use Mailery\Activity\Log\Entity\LoggableEntityTrait;
 use Mailery\Brand\Entity\Brand;
-use Mailery\Common\Entity\RoutableEntityInterface;
 
 /**
  * @Cycle\Annotated\Annotation\Entity(
- *      table = "messages",
- *      repository = "Mailery\Message\Repository\MessageRepository",
- *      mapper = "Mailery\Message\Mapper\DefaultMapper"
+ *      table = "templates",
+ *      repository = "Mailery\Template\Repository\TemplateRepository",
+ *      mapper = "Mailery\Template\Mapper\DefaultMapper"
  * )
  */
-class Message implements RoutableEntityInterface, LoggableEntityInterface
+class Template
 {
-    use LoggableEntityTrait;
-
     /**
      * @Cycle\Annotated\Annotation\Column(type = "primary")
      * @var int|null
@@ -45,6 +40,12 @@ class Message implements RoutableEntityInterface, LoggableEntityInterface
      * @var string
      */
     private $name;
+
+    /**
+     * @Cycle\Annotated\Annotation\Column(type = "text")
+     * @var string
+     */
+    private $description;
 
     /**
      * @return string
@@ -112,34 +113,21 @@ class Message implements RoutableEntityInterface, LoggableEntityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public function getEditRouteName(): ?string
+    public function getDescription(): string
     {
-        return '/message/message/edit';
+        return $this->description;
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $description
+     * @return self
      */
-    public function getEditRouteParams(): array
+    public function setDescription(string $description): self
     {
-        return ['id' => $this->getId()];
-    }
+        $this->description = $description;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getViewRouteName(): ?string
-    {
-        return '/message/message/view';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getViewRouteParams(): array
-    {
-        return ['id' => $this->getId()];
+        return $this;
     }
 }

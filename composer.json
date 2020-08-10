@@ -1,18 +1,18 @@
 {
-    "name": "maileryio/mailery-message",
+    "name": "maileryio/mailery-template",
     "type": "library",
-    "description": "Message module for Mailery Platform",
+    "description": "Template module for Mailery Platform",
     "keywords": [
         "mail",
         "mailer",
-        "message"
+        "template"
     ],
-    "homepage": "https://github.com/maileryio/mailery-message",
+    "homepage": "https://github.com/maileryio/mailery-template",
     "license": "BSD-3-Clause",
     "support": {
-        "source": "https://github.com/maileryio/mailery-message",
-        "issues": "https://github.com/maileryio/mailery-message/issues",
-        "wiki": "https://github.com/maileryio/mailery-message/wiki"
+        "source": "https://github.com/maileryio/mailery-template",
+        "issues": "https://github.com/maileryio/mailery-template/issues",
+        "wiki": "https://github.com/maileryio/mailery-template/wiki"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Mailery\\Message\\": "src"
+            "Mailery\\Template\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Mailery\\Message\\Tests\\": "tests"
+            "Mailery\\Template\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -46,7 +46,8 @@
         },
         "config-plugin": {
             "params": "config/params.php",
-            "common": "config/common.php"
+            "common": "config/common.php",
+            "providers": "config/providers.php"
         }
     },
     "config": {

@@ -2,43 +2,45 @@
 
 declare(strict_types=1);
 
-namespace Mailery\Message\Controller;
+namespace Mailery\Template\Controller;
 
-use Mailery\Message\Entity\Message;
-use Mailery\Message\Form\MessageForm;
-use Mailery\Message\Repository\MessageRepository;
-use Mailery\Message\Search\MessageSearchBy;
-use Mailery\Message\Service\MessageService;
-use Mailery\Message\WebController;
+use Mailery\Template\Entity\Template;
+use Mailery\Template\Form\TemplateForm;
+use Mailery\Template\Repository\TemplateRepository;
+use Mailery\Template\Search\TemplateSearchBy;
+use Mailery\Template\Service\TemplateService;
+use Mailery\Template\WebController;
 use Mailery\Widget\Dataview\Paginator\OffsetPaginator;
 use Mailery\Widget\Search\Data\Reader\Search;
 use Mailery\Widget\Search\Form\SearchForm;
 use Mailery\Widget\Search\Model\SearchByList;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Template\ResponseInterface as Response;
+use Psr\Http\Template\ServerRequestInterface as Request;
 use Yiisoft\Data\Reader\Sort;
 use Yiisoft\Http\Method;
 use Yiisoft\Router\UrlGeneratorInterface as UrlGenerator;
+use Mailery\Template\Provider\TemplateTypeProvider;
 
-class MessageController extends WebController
+class TemplateController extends WebController
 {
     private const PAGINATION_INDEX = 10;
 
     /**
      * @param Request $request
      * @param SearchForm $searchForm
+     * @param TemplateTypeProvider $typeProvider
      * @return Response
      */
-    public function index(Request $request, SearchForm $searchForm): Response
+    public function index(Request $request, SearchForm $searchForm, TemplateTypeProvider $typeProvider): Response
     {
         $searchForm = $searchForm->withSearchByList(new SearchByList([
-            new MessageSearchBy(),
+            new TemplateSearchBy(),
         ]));
 
         $queryParams = $request->getQueryParams();
         $pageNum = (int) ($queryParams['page'] ?? 1);
 
-        $dataReader = $this->getMessageRepository()
+        $dataReader = $this->getTemplateRepository()
             ->getDataReader()
             ->withSearch((new Search())->withSearchPhrase($searchForm->getSearchPhrase())->withSearchBy($searchForm->getSearchBy()))
             ->withSort((new Sort([]))->withOrderString('name'));
@@ -47,7 +49,11 @@ class MessageController extends WebController
             ->withPageSize(self::PAGINATION_INDEX)
             ->withCurrentPage($pageNum);
 
-        return $this->render('index', compact('searchForm', 'paginator'));
+        $templateTypes = $typeProvider
+            ->withBrand($this->getBrandLocator()->getBrand())
+            ->getTypes();
+
+        return $this->render('index', compact('searchForm', 'paginator', 'templateTypes'));
     }
 
     /**
@@ -62,44 +68,44 @@ class MessageController extends WebController
 
     /**
      * @param Request $request
-     * @param MessageForm $campaignForm
+     * @param TemplateForm $campaignForm
      * @param UrlGenerator $urlGenerator
      * @return Response
      */
-    public function create(Request $request, MessageForm $campaignForm, UrlGenerator $urlGenerator): Response
+    public function create(Request $request, TemplateForm $campaignForm, UrlGenerator $urlGenerator): Response
     {
         ;
     }
 
     /**
      * @param Request $request
-     * @param MessageForm $campaignForm
+     * @param TemplateForm $campaignForm
      * @param UrlGenerator $urlGenerator
      * @return Response
      */
-    public function edit(Request $request, MessageForm $campaignForm, UrlGenerator $urlGenerator): Response
+    public function edit(Request $request, TemplateForm $campaignForm, UrlGenerator $urlGenerator): Response
     {
         ;
     }
 
     /**
      * @param Request $request
-     * @param MessageService $campaignService
+     * @param TemplateService $campaignService
      * @param UrlGenerator $urlGenerator
      * @return Response
      */
-    public function delete(Request $request, MessageService $campaignService, UrlGenerator $urlGenerator): Response
+    public function delete(Request $request, TemplateService $campaignService, UrlGenerator $urlGenerator): Response
     {
         ;
     }
 
     /**
-     * @return MessageRepository
+     * @return TemplateRepository
      */
-    private function getMessageRepository(): MessageRepository
+    private function getTemplateRepository(): TemplateRepository
     {
         return $this->getOrm()
-            ->getRepository(Message::class)
+            ->getRepository(Template::class)
             ->withBrand($this->getBrandLocator()->getBrand());
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Mailery\Template\Provider;
 
-class TemplateTypeConfigs
+final class TemplateTypeConfigs
 {
     /**
      * @var array

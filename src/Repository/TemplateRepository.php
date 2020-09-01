@@ -10,7 +10,7 @@ use Mailery\Brand\Entity\Brand;
 use Mailery\Template\Entity\Template;
 use Mailery\Widget\Search\Data\Reader\SelectDataReader;
 
-class TemplateRepository extends Repository
+final class TemplateRepository extends Repository
 {
     /**
      * @param array $scope

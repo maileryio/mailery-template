@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Mailery\Template;
 
-class Module
+final class Module
 {
     const NAME = 'Template';
 }

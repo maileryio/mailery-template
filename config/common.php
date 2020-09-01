@@ -11,10 +11,20 @@ declare(strict_types=1);
  */
 
 use Mailery\Template\Provider\TemplateTypeConfigs;
+use Mailery\Template\Entity\Template;
+use Mailery\Template\Repository\TemplateRepository;
+use Cycle\ORM\ORMInterface;
+use Psr\Container\ContainerInterface;
 
 return [
     TemplateTypeConfigs::class => static function () use ($params) {
         $configs = $params['maileryio/mailery-template']['types'] ?? [];
         return new TemplateTypeConfigs($configs);
-    }
+    },
+
+    TemplateRepository::class => static function (ContainerInterface $container) {
+        return $container
+            ->get(ORMInterface::class)
+            ->getRepository(Template::class);
+    },
 ];

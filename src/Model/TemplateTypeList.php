@@ -4,6 +4,6 @@ namespace Mailery\Template\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class TemplateTypeList extends ArrayCollection
+final class TemplateTypeList extends ArrayCollection
 {
 }

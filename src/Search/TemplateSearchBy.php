@@ -8,7 +8,7 @@ use Cycle\ORM\Select;
 use Cycle\ORM\Select\QueryBuilder;
 use Mailery\Widget\Search\Model\SearchBy;
 
-class TemplateSearchBy extends SearchBy
+final class TemplateSearchBy extends SearchBy
 {
     /**
      * {@inheritdoc}

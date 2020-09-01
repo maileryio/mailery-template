@@ -23,7 +23,7 @@ use Mailery\Template\Module;
  *      }
  * )
  */
-class DefaultMapper extends LoggableMapper
+final class DefaultMapper extends LoggableMapper
 {
     /**
      * {@inheritdoc}

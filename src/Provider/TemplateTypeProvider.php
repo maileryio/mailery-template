@@ -8,7 +8,7 @@ use Mailery\Template\Model\TemplateTypeList;
 use Mailery\Template\TemplateTypeInterface;
 use Mailery\Brand\Entity\Brand;
 
-class TemplateTypeProvider
+final class TemplateTypeProvider
 {
     /**
      * @var Brand

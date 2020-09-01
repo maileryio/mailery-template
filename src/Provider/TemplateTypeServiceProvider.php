@@ -7,7 +7,7 @@ use Yiisoft\Di\Container;
 use Yiisoft\Factory\Factory;
 use Mailery\Template\Provider\TemplateTypeConfigs;
 
-class TemplateTypeServiceProvider extends ServiceProvider
+final class TemplateTypeServiceProvider extends ServiceProvider
 {
     /**
      * @param Container $container

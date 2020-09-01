@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 use Mailery\Menu\MenuItem;
-use Mailery\Template\Controller\TemplateController;
+use Mailery\Template\Controller\DefaultController;
 use Opis\Closure\SerializableClosure;
 use Yiisoft\Router\Route;
 use Yiisoft\Router\UrlGeneratorInterface;
@@ -29,17 +29,16 @@ return [
 
     'router' => [
         'routes' => [
-            // Templates:
-            '/template/template/index' => Route::get('/brand/{brandId:\d+}/templates', [TemplateController::class, 'index'])
-                ->name('/template/template/index'),
-            '/template/template/view' => Route::get('/brand/{brandId:\d+}/template/template/view/{id:\d+}', [TemplateController::class, 'view'])
-                ->name('/template/template/view'),
-            '/template/template/create' => Route::methods(['GET', 'POST'], '/brand/{brandId:\d+}/template/template/create', [TemplateController::class, 'create'])
-                ->name('/template/template/create'),
-            '/template/template/edit' => Route::methods(['GET', 'POST'], '/brand/{brandId:\d+}/template/template/edit/{id:\d+}', [TemplateController::class, 'edit'])
-                ->name('/template/template/edit'),
-            '/template/template/delete' => Route::delete('/brand/{brandId:\d+}/template/template/delete/{id:\d+}', [TemplateController::class, 'delete'])
-                ->name('/template/template/delete'),
+            '/template/default/index' => Route::get('/brand/{brandId:\d+}/templates', [DefaultController::class, 'index'])
+                ->name('/template/default/index'),
+//            '/template/default/view' => Route::get('/brand/{brandId:\d+}/template/view/{id:\d+}', [DefaultController::class, 'view'])
+//                ->name('/template/default/view'),
+//            '/template/default/create' => Route::methods(['GET', 'POST'], '/brand/{brandId:\d+}/template/create', [DefaultController::class, 'create'])
+//                ->name('/template/default/create'),
+//            '/template/default/edit' => Route::methods(['GET', 'POST'], '/brand/{brandId:\d+}/template/edit/{id:\d+}', [DefaultController::class, 'edit'])
+//                ->name('/template/default/edit'),
+//            '/template/default/delete' => Route::delete('/brand/{brandId:\d+}/template/delete/{id:\d+}', [DefaultController::class, 'delete'])
+//                ->name('/template/default/delete'),
         ],
     ],
 
@@ -53,14 +52,14 @@ return [
                         'templates' => (new MenuItem())
                             ->withLabel('All Templates')
                             ->withUrl(new SerializableClosure(function (UrlGeneratorInterface $urlGenerator) {
-                                return $urlGenerator->generate('/template/template/index');
+                                return $urlGenerator->generate('/template/default/index');
                             }))
                             ->withActiveRouteNames([
-                                '/template/template/index',
-                                '/template/template/view',
-                                '/template/template/create',
-                                '/template/template/edit',
-                                '/template/template/delete',
+                                '/template/default/index',
+//                                '/template/default/view',
+//                                '/template/default/create',
+//                                '/template/default/edit',
+//                                '/template/default/delete',
                             ])
                             ->withOrder(100),
                     ])

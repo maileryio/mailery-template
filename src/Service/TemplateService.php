@@ -9,10 +9,10 @@ use Mailery\Widget\Search\Model\SearchByList;
 use Mailery\Template\Search\TemplateSearchBy;
 use Yiisoft\Data\Paginator\PaginatorInterface;
 use Yiisoft\Data\Reader\Sort;
-use Mailery\Widget\Search\Data\Reader\Search;
-use Mailery\Widget\Dataview\Paginator\OffsetPaginator;
+use Yiisoft\Data\Paginator\OffsetPaginator;
 use Mailery\Template\Provider\TemplateTypeProvider;
 use Mailery\Template\Model\TemplateTypeList;
+use Yiisoft\Data\Reader\Filter\FilterInterface;
 
 final class TemplateService
 {
@@ -65,22 +65,23 @@ final class TemplateService
     }
 
     /**
-     * @param SearchForm $searchForm
+     * @param FilterInterface|null $filter
      * @return PaginatorInterface
      */
-    public function getFullPaginator(SearchForm $searchForm): PaginatorInterface
+    public function getFullPaginator(?FilterInterface $filter = null): PaginatorInterface
     {
         $dataReader = $this->templateRepo
             ->withBrand($this->brandLocator->getBrand())
             ->getDataReader();
 
-        $search = (new Search())->withSearchPhrase($searchForm->getSearchPhrase())->withSearchBy($searchForm->getSearchBy());
-        $sort = (new Sort([]))->withOrder(['created_at' => 'desc']);
+        if ($filter !== null) {
+            $dataReader = $dataReader->withFilter($filter);
+        }
 
         return new OffsetPaginator(
-            $dataReader
-                ->withSearch($search)
-                ->withSort($sort)
+            $dataReader->withSort(
+                (new Sort([]))->withOrder(['created_at' => 'desc'])
+            )
         );
     }
 }

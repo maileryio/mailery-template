@@ -44,7 +44,7 @@ final class DefaultController
             ->withSearchBy($searchBy)
             ->withSearchPhrase($searchPhrase);
 
-        $paginator = $templateService->getFullPaginator($searchForm)
+        $paginator = $templateService->getFullPaginator($searchForm->getSearchBy())
             ->withPageSize(self::PAGINATION_INDEX)
             ->withCurrentPage($pageNum);
 

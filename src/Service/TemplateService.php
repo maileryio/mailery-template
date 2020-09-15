@@ -80,7 +80,7 @@ final class TemplateService
 
         return new OffsetPaginator(
             $dataReader->withSort(
-                (new Sort([]))->withOrder(['created_at' => 'desc'])
+                (new Sort([]))->withOrder(['id' => 'DESC'])
             )
         );
     }

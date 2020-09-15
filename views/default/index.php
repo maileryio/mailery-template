@@ -73,9 +73,10 @@ $this->setTitle('All templates');
                 (new DataColumn())
                     ->header('Name')
                     ->content(function (Template $data, int $index) use ($urlGenerator) {
+                        var_dump(get_class($data));exit;
                         return Html::a(
                             $data->getName(),
-                            $urlGenerator->generate('/template/template/view', ['id' => $data->getId()])
+                            $urlGenerator->generate($data->getViewRouteName(), $data->getViewRouteParams())
                         );
                     }),
                 (new ActionColumn())
@@ -87,30 +88,30 @@ $this->setTitle('All templates');
                     ->update(function (Template $data, int $index) use ($urlGenerator) {
                         return Html::a(
                             (string) Icon::widget()->name('pencil'),
-                            $urlGenerator->generate('/template/template/edit', ['id' => $data->getId()]),
+                            $urlGenerator->generate($data->getEditRouteName(), $data->getEditRouteParams()),
                             [
                                 'class' => 'text-decoration-none mr-3',
                             ]
                         );
                     })
                     ->delete(''),
-                (new ActionColumn())
-                    ->contentOptions([
-                        'style' => 'width: 80px;',
-                    ])
-                    ->header('Delete')
-                    ->view('')
-                    ->update('')
-                    ->delete(function (Template $data, int $index) use ($urlGenerator) {
-                        return Link::widget()
-                            ->label((string) Icon::widget()->name('delete')->options(['class' => 'mr-1']))
-                            ->method('delete')
-                            ->href($urlGenerator->generate('/template/template/delete', ['id' => $data->getId()]))
-                            ->confirm('Are you sure?')
-                            ->options([
-                                'class' => 'text-decoration-none text-danger',
-                            ]);
-                    }),
+//                (new ActionColumn())
+//                    ->contentOptions([
+//                        'style' => 'width: 80px;',
+//                    ])
+//                    ->header('Delete')
+//                    ->view('')
+//                    ->update('')
+//                    ->delete(function (Template $data, int $index) use ($urlGenerator) {
+//                        return Link::widget()
+//                            ->label((string) Icon::widget()->name('delete')->options(['class' => 'mr-1']))
+//                            ->method('delete')
+//                            ->href($urlGenerator->generate('/template/template/delete', ['id' => $data->getId()]))
+//                            ->confirm('Are you sure?')
+//                            ->options([
+//                                'class' => 'text-decoration-none text-danger',
+//                            ]);
+//                    }),
             ]);
         ?>
     </div>

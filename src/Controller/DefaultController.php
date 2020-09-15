@@ -9,6 +9,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Mailery\Web\ViewRenderer;
 use Mailery\Template\Service\TemplateTypeService;
+use Psr\Http\Message\ResponseFactoryInterface as ResponseFactory;
+use Mailery\Template\Service\TemplateCrudService;
 
 final class DefaultController
 {
@@ -20,11 +22,23 @@ final class DefaultController
     private ViewRenderer $viewRenderer;
 
     /**
-     * @param ViewRenderer $viewRenderer
+     * @var ResponseFactory
      */
-    public function __construct(ViewRenderer $viewRenderer)
-    {
-        $this->viewRenderer = $viewRenderer->withController($this);
+    private ResponseFactory $responseFactory;
+
+    /**
+     * @param ViewRenderer $viewRenderer
+     * @param ResponseFactory $responseFactory
+     */
+    public function __construct(
+        ViewRenderer $viewRenderer,
+        ResponseFactory $responseFactory
+    ) {
+        $this->viewRenderer = $viewRenderer
+            ->withController($this)
+            ->withCsrf();
+
+        $this->responseFactory = $responseFactory;
     }
 
     /**
@@ -51,5 +65,25 @@ final class DefaultController
         $templateTypes = $templateTypeService->getTypeList();
 
         return $this->viewRenderer->render('index', compact('searchForm', 'paginator', 'templateTypes'));
+    }
+
+    /**
+     * @param Request $request
+     * @param TemplateCrudService $templateCrudService
+     * @param UrlGenerator $urlGenerator
+     * @return Response
+     */
+    public function delete(Request $request, TemplateCrudService $templateCrudService, UrlGenerator $urlGenerator): Response
+    {
+        $templateId = $request->getAttribute('id');
+        if (empty($templateId) || ($template = $this->templateRepo->findByPK($templateId)) === null) {
+            return $this->responseFactory->createResponse(404);
+        }
+
+        $templateCrudService->delete($template);
+
+        return $this->responseFactory
+            ->createResponse(302)
+            ->withHeader('Location', $urlGenerator->generate('/template/template/index'));
     }
 }

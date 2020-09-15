@@ -22,14 +22,8 @@ final class RouteCollectorServiceProvider extends ServiceProvider
                 [
                     Route::get('/templates', [DefaultController::class, 'index'])
                         ->name('/template/default/index'),
-//                    '/template/default/view' => Route::get('/brand/{brandId:\d+}/template/view/{id:\d+}', [DefaultController::class, 'view'])
-//                        ->name('/template/default/view'),
-//                    '/template/default/create' => Route::methods(['GET', 'POST'], '/brand/{brandId:\d+}/template/create', [DefaultController::class, 'create'])
-//                        ->name('/template/default/create'),
-//                    '/template/default/edit' => Route::methods(['GET', 'POST'], '/brand/{brandId:\d+}/template/edit/{id:\d+}', [DefaultController::class, 'edit'])
-//                        ->name('/template/default/edit'),
-//                    '/template/default/delete' => Route::delete('/brand/{brandId:\d+}/template/delete/{id:\d+}', [DefaultController::class, 'delete'])
-//                        ->name('/template/default/delete'),
+                    Route::delete('/template/default/delete/{id:\d+}', [DefaultController::class, 'delete'])
+                        ->name('/template/default/delete'),
                 ]
             )
         );

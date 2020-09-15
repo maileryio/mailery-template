@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Mailery\Template\Entity;
 
 use Mailery\Brand\Entity\Brand;
+use Mailery\Common\Entity\RoutableEntityInterface;
 
 /**
  * @Cycle\Annotated\Annotation\Entity(
@@ -21,31 +22,25 @@ use Mailery\Brand\Entity\Brand;
  *      mapper = "Mailery\Template\Mapper\DefaultMapper"
  * )
  */
-class Template
+class Template implements RoutableEntityInterface
 {
     /**
      * @Cycle\Annotated\Annotation\Column(type = "primary")
      * @var int|null
      */
-    private $id;
+    protected $id;
 
     /**
      * @Cycle\Annotated\Annotation\Relation\BelongsTo(target = "Mailery\Brand\Entity\Brand", nullable = false)
      * @var Brand
      */
-    private $brand;
+    protected $brand;
 
     /**
      * @Cycle\Annotated\Annotation\Column(type = "string(32)")
      * @var string
      */
-    private $name;
-
-    /**
-     * @Cycle\Annotated\Annotation\Column(type = "text")
-     * @var string
-     */
-    private $description;
+    protected $name;
 
     /**
      * @return string
@@ -113,21 +108,34 @@ class Template
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getDescription(): string
+    public function getEditRouteName(): ?string
     {
-        return $this->description;
+        return '/template/template/edit';
     }
 
     /**
-     * @param string $description
-     * @return self
+     * {@inheritdoc}
      */
-    public function setDescription(string $description): self
+    public function getEditRouteParams(): array
     {
-        $this->description = $description;
+        return ['id' => $this->getId()];
+    }
 
-        return $this;
+    /**
+     * {@inheritdoc}
+     */
+    public function getViewRouteName(): ?string
+    {
+        return '/template/template/view';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getViewRouteParams(): array
+    {
+        return ['id' => $this->getId()];
     }
 }

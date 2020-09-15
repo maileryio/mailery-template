@@ -38,16 +38,16 @@ final class TemplateRepository extends Repository
     }
 
     /**
-     * @param string $subject
+     * @param string $name
      * @param Template|null $exclude
      * @return Template|null
      */
-    public function findBySubject(string $subject, ?Template $exclude = null): ?Template
+    public function findByName(string $name, ?Template $exclude = null): ?Template
     {
         return $this
             ->select()
-            ->where(function (QueryBuilder $select) use ($subject, $exclude) {
-                $select->where('subject', $subject);
+            ->where(function (QueryBuilder $select) use ($name, $exclude) {
+                $select->where('name', $name);
 
                 if ($exclude !== null) {
                     $select->where('id', '<>', $exclude->getId());

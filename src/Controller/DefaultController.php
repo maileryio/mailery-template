@@ -4,13 +4,19 @@ declare(strict_types=1);
 
 namespace Mailery\Template\Controller;
 
-use Mailery\Template\Service\TemplateService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Mailery\Web\ViewRenderer;
-use Mailery\Template\Service\TemplateTypeService;
 use Psr\Http\Message\ResponseFactoryInterface as ResponseFactory;
 use Mailery\Template\Service\TemplateCrudService;
+use Mailery\Brand\Service\BrandLocatorInterface;
+use Mailery\Template\Repository\TemplateRepository;
+use Mailery\Widget\Search\Form\SearchForm;
+use Mailery\Widget\Search\Model\SearchByList;
+use Mailery\Template\Search\TemplateSearchBy;
+use Mailery\Template\Filter\TemplateFilter;
+use Mailery\Template\Provider\TemplateTypeProvider;
+use Yiisoft\Router\UrlGeneratorInterface as UrlGenerator;
 
 final class DefaultController
 {
@@ -27,42 +33,64 @@ final class DefaultController
     private ResponseFactory $responseFactory;
 
     /**
+     * @var TemplateRepository
+     */
+    private TemplateRepository $templateRepo;
+
+    /**
+     * @var TemplateTypeProvider
+     */
+    private TemplateTypeProvider $templateTypeProvider;
+
+    /**
      * @param ViewRenderer $viewRenderer
      * @param ResponseFactory $responseFactory
+     * @param BrandLocatorInterface $brandLocator
+     * @param TemplateRepository $templateRepo
+     * @param TemplateTypeProvider $typeProvider
      */
     public function __construct(
         ViewRenderer $viewRenderer,
-        ResponseFactory $responseFactory
+        ResponseFactory $responseFactory,
+        BrandLocatorInterface $brandLocator,
+        TemplateRepository $templateRepo,
+        TemplateTypeProvider $typeProvider
     ) {
         $this->viewRenderer = $viewRenderer
             ->withController($this)
             ->withCsrf();
 
         $this->responseFactory = $responseFactory;
+        $this->templateRepo = $templateRepo->withBrand($brandLocator->getBrand());
+        $this->templateTypeProvider = $typeProvider->withBrand($brandLocator->getBrand());
     }
 
     /**
      * @param Request $request
-     * @param TemplateService $templateService
-     * @param TemplateTypeService $templateTypeService
      * @return Response
      */
-    public function index(Request $request, TemplateService $templateService, TemplateTypeService $templateTypeService): Response
+    public function index(Request $request): Response
     {
         $queryParams = $request->getQueryParams();
         $pageNum = (int) ($queryParams['page'] ?? 1);
         $searchBy = $queryParams['searchBy'] ?? null;
         $searchPhrase = $queryParams['search'] ?? null;
 
-        $searchForm = $templateService->getSearchForm()
+        $searchForm = (new SearchForm())
+            ->withSearchByList(new SearchByList([
+                new TemplateSearchBy(),
+            ]))
             ->withSearchBy($searchBy)
             ->withSearchPhrase($searchPhrase);
 
-        $paginator = $templateService->getFullPaginator($searchForm->getSearchBy())
+        $filter = (new TemplateFilter())
+            ->withSearchForm($searchForm);
+
+        $paginator = $this->templateRepo->getFullPaginator($filter)
             ->withPageSize(self::PAGINATION_INDEX)
             ->withCurrentPage($pageNum);
 
-        $templateTypes = $templateTypeService->getTypeList();
+        $templateTypes = $this->templateTypeProvider->getTypes();
 
         return $this->viewRenderer->render('index', compact('searchForm', 'paginator', 'templateTypes'));
     }
@@ -84,6 +112,6 @@ final class DefaultController
 
         return $this->responseFactory
             ->createResponse(302)
-            ->withHeader('Location', $urlGenerator->generate('/template/template/index'));
+            ->withHeader('Location', $urlGenerator->generate('/template/default/index'));
     }
 }

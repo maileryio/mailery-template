@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Mailery\Template\Entity;
 
+use RuntimeException;
 use Mailery\Brand\Entity\Brand;
 use Mailery\Common\Entity\RoutableEntityInterface;
 
@@ -112,7 +113,7 @@ class Template implements RoutableEntityInterface
      */
     public function getEditRouteName(): ?string
     {
-        return '/template/template/edit';
+        throw new RuntimeException('Must be implemented in nested.');
     }
 
     /**
@@ -120,7 +121,7 @@ class Template implements RoutableEntityInterface
      */
     public function getEditRouteParams(): array
     {
-        return ['id' => $this->getId()];
+        throw new RuntimeException('Must be implemented in nested.');
     }
 
     /**
@@ -128,13 +129,29 @@ class Template implements RoutableEntityInterface
      */
     public function getViewRouteName(): ?string
     {
-        return '/template/template/view';
+        throw new RuntimeException('Must be implemented in nested.');
     }
 
     /**
      * {@inheritdoc}
      */
     public function getViewRouteParams(): array
+    {
+        throw new RuntimeException('Must be implemented in nested.');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDeleteRouteName(): ?string
+    {
+        return '/template/default/delete';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDeleteRouteParams(): array
     {
         return ['id' => $this->getId()];
     }

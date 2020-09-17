@@ -9,6 +9,10 @@ use Cycle\ORM\Select\Repository;
 use Mailery\Brand\Entity\Brand;
 use Mailery\Template\Entity\Template;
 use Yiisoft\Yii\Cycle\DataReader\SelectDataReader;
+use Mailery\Template\Filter\TemplateFilter;
+use Yiisoft\Data\Paginator\OffsetPaginator;
+use Yiisoft\Data\Paginator\PaginatorInterface;
+use Yiisoft\Data\Reader\Sort;
 
 final class TemplateRepository extends Repository
 {
@@ -20,6 +24,25 @@ final class TemplateRepository extends Repository
     public function getDataReader(array $scope = [], array $orderBy = []): SelectDataReader
     {
         return new SelectDataReader($this->select()->where($scope)->orderBy($orderBy));
+    }
+
+    /**
+     * @param TemplateFilter $filter
+     * @return PaginatorInterface
+     */
+    public function getFullPaginator(TemplateFilter $filter): PaginatorInterface
+    {
+        $dataReader = $this->getDataReader();
+
+        if (!$filter->isEmpty()) {
+            $dataReader = $dataReader->withFilter($filter);
+        }
+
+        return new OffsetPaginator(
+            $dataReader->withSort(
+                (new Sort([]))->withOrder(['id' => 'DESC'])
+            )
+        );
     }
 
     /**

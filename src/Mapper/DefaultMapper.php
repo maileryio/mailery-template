@@ -19,7 +19,8 @@ use Mailery\Template\Module;
  * @Cycle\Annotated\Annotation\Table(
  *      columns = {
  *          "created_at": @Cycle\Annotated\Annotation\Column(type = "datetime"),
- *          "updated_at": @Cycle\Annotated\Annotation\Column(type = "datetime")
+ *          "updated_at": @Cycle\Annotated\Annotation\Column(type = "datetime"),
+ *          "_type": @Cycle\Annotated\Annotation\Column(type = "string(255)")
  *      }
  * )
  */

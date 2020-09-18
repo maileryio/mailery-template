@@ -15,7 +15,7 @@ use Mailery\Widget\Search\Form\SearchForm;
 use Mailery\Widget\Search\Model\SearchByList;
 use Mailery\Template\Search\TemplateSearchBy;
 use Mailery\Template\Filter\TemplateFilter;
-use Mailery\Template\Provider\TemplateTypeProvider;
+use Mailery\Template\Model\TemplateTypeList;
 use Yiisoft\Router\UrlGeneratorInterface as UrlGenerator;
 
 final class DefaultController
@@ -38,23 +38,16 @@ final class DefaultController
     private TemplateRepository $templateRepo;
 
     /**
-     * @var TemplateTypeProvider
-     */
-    private TemplateTypeProvider $templateTypeProvider;
-
-    /**
      * @param ViewRenderer $viewRenderer
      * @param ResponseFactory $responseFactory
      * @param BrandLocatorInterface $brandLocator
      * @param TemplateRepository $templateRepo
-     * @param TemplateTypeProvider $typeProvider
      */
     public function __construct(
         ViewRenderer $viewRenderer,
         ResponseFactory $responseFactory,
         BrandLocatorInterface $brandLocator,
-        TemplateRepository $templateRepo,
-        TemplateTypeProvider $typeProvider
+        TemplateRepository $templateRepo
     ) {
         $this->viewRenderer = $viewRenderer
             ->withController($this)
@@ -62,14 +55,14 @@ final class DefaultController
 
         $this->responseFactory = $responseFactory;
         $this->templateRepo = $templateRepo->withBrand($brandLocator->getBrand());
-        $this->templateTypeProvider = $typeProvider->withBrand($brandLocator->getBrand());
     }
 
     /**
      * @param Request $request
+     * @param TemplateTypeList $templateTypes
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(Request $request, TemplateTypeList $templateTypes): Response
     {
         $queryParams = $request->getQueryParams();
         $pageNum = (int) ($queryParams['page'] ?? 1);
@@ -89,8 +82,6 @@ final class DefaultController
         $paginator = $this->templateRepo->getFullPaginator($filter)
             ->withPageSize(self::PAGINATION_INDEX)
             ->withCurrentPage($pageNum);
-
-        $templateTypes = $this->templateTypeProvider->getTypes();
 
         return $this->viewRenderer->render('index', compact('searchForm', 'paginator', 'templateTypes'));
     }

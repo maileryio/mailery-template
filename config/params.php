@@ -39,10 +39,6 @@ return [
                             }))
                             ->withActiveRouteNames([
                                 '/template/default/index',
-//                                '/template/default/view',
-//                                '/template/default/create',
-//                                '/template/default/edit',
-//                                '/template/default/delete',
                             ])
                             ->withOrder(100),
                     ])

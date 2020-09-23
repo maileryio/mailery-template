@@ -6,7 +6,7 @@ namespace Mailery\Template\Controller;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Mailery\Web\ViewRenderer;
+use Yiisoft\Yii\View\ViewRenderer;
 use Psr\Http\Message\ResponseFactoryInterface as ResponseFactory;
 use Mailery\Template\Service\TemplateCrudService;
 use Mailery\Brand\Service\BrandLocatorInterface;
@@ -51,6 +51,7 @@ final class DefaultController
     ) {
         $this->viewRenderer = $viewRenderer
             ->withController($this)
+            ->withViewBasePath(dirname(dirname(__DIR__)) . '/views')
             ->withCsrf();
 
         $this->responseFactory = $responseFactory;

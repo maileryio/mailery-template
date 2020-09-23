@@ -1,6 +1,6 @@
 <?php
 
-namespace Mailery\Template;
+namespace Mailery\Template\Model;
 
 interface TemplateTypeInterface
 {

@@ -143,6 +143,22 @@ class Template implements RoutableEntityInterface
     /**
      * {@inheritdoc}
      */
+    public function getPreviewRouteName(): ?string
+    {
+        throw new RuntimeException('Must be implemented in nested.');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPreviewRouteParams(): array
+    {
+        throw new RuntimeException('Must be implemented in nested.');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getDeleteRouteName(): ?string
     {
         return '/template/default/delete';

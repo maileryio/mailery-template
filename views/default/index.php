@@ -82,6 +82,22 @@ $this->setTitle('All templates');
                     ->contentOptions([
                         'style' => 'width: 80px;',
                     ])
+                    ->header('Preview')
+                    ->view('')
+                    ->update(function (Template $data, int $index) use ($urlGenerator) {
+                        return Html::a(
+                            (string) Icon::widget()->name('eye'),
+                            $urlGenerator->generate($data->getPreviewRouteName(), $data->getPreviewRouteParams()),
+                            [
+                                'class' => 'text-decoration-none mr-3',
+                            ]
+                        );
+                    })
+                    ->delete(''),
+                (new ActionColumn())
+                    ->contentOptions([
+                        'style' => 'width: 80px;',
+                    ])
                     ->header('Edit')
                     ->view('')
                     ->update(function (Template $data, int $index) use ($urlGenerator) {

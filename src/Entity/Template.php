@@ -23,7 +23,7 @@ use Mailery\Common\Entity\RoutableEntityInterface;
  *      mapper = "Mailery\Template\Mapper\DefaultMapper"
  * )
  */
-class Template implements RoutableEntityInterface
+abstract class Template implements RoutableEntityInterface
 {
     /**
      * @Cycle\Annotated\Annotation\Column(type = "primary")

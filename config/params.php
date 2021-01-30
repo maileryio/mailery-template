@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @copyright Copyright (c) 2020, Mailery (https://mailery.io/)
  */
 
-use Mailery\Menu\MenuItem;
-use Opis\Closure\SerializableClosure;
 use Yiisoft\Router\UrlGeneratorInterface;
 
 return [
@@ -25,24 +23,26 @@ return [
         ],
     ],
 
-    'menu' => [
-        'sidebar' => [
-            'items' => [
-                'templates' => (new MenuItem())
-                    ->withLabel('Templates')
-                    ->withIcon('email-multiple-outline')
-                    ->withChildItems([
-                        'templates' => (new MenuItem())
-                            ->withLabel('All Templates')
-                            ->withUrl(new SerializableClosure(function (UrlGeneratorInterface $urlGenerator) {
-                                return $urlGenerator->generate('/template/default/index');
-                            }))
-                            ->withActiveRouteNames([
-                                '/template/default/index',
-                            ])
-                            ->withOrder(100),
-                    ])
-                    ->withOrder(400),
+    'maileryio/mailery-menu-sidebar' => [
+        'items' => [
+            'templates' => [
+                'label' => static function () {
+                    return 'Templates';
+                },
+                'icon' => 'email-multiple-outline',
+                'order' => 400,
+                'items' => [
+                    'templates' => [
+                        'label' => 'All Templates',
+                        'url' => static function (UrlGeneratorInterface $urlGenerator) {
+                            return $urlGenerator->generate('/template/default/index');
+                        },
+                        'order' => 100,
+                        'activeRouteNames' => [
+                            '/template/default/index',
+                        ],
+                    ],
+                ],
             ],
         ],
     ],

@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Yiisoft\Yii\View\ViewRenderer;
 use Psr\Http\Message\ResponseFactoryInterface as ResponseFactory;
 use Mailery\Template\Service\TemplateCrudService;
-use Mailery\Brand\Service\BrandLocatorInterface;
+use Mailery\Brand\BrandLocatorInterface;
 use Mailery\Template\Repository\TemplateRepository;
 use Mailery\Widget\Search\Form\SearchForm;
 use Mailery\Widget\Search\Model\SearchByList;

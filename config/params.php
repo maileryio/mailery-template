@@ -30,14 +30,12 @@ return [
                     return 'Templates';
                 },
                 'icon' => 'email-multiple-outline',
-                'order' => 400,
                 'items' => [
                     'templates' => [
                         'label' => 'All Templates',
                         'url' => static function (UrlGeneratorInterface $urlGenerator) {
                             return $urlGenerator->generate('/template/default/index');
                         },
-                        'order' => 100,
                         'activeRouteNames' => [
                             '/template/default/index',
                         ],

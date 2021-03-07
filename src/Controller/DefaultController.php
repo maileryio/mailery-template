@@ -59,10 +59,10 @@ final class DefaultController
 
     /**
      * @param Request $request
-     * @param TemplateTypeList $templateTypes
+     * @param TemplateTypeList $templateTypeList
      * @return Response
      */
-    public function index(Request $request, TemplateTypeList $templateTypes): Response
+    public function index(Request $request, TemplateTypeList $templateTypeList): Response
     {
         $queryParams = $request->getQueryParams();
         $pageNum = (int) ($queryParams['page'] ?? 1);
@@ -83,7 +83,7 @@ final class DefaultController
             ->withPageSize(self::PAGINATION_INDEX)
             ->withCurrentPage($pageNum);
 
-        return $this->viewRenderer->render('index', compact('searchForm', 'paginator', 'templateTypes'));
+        return $this->viewRenderer->render('index', compact('searchForm', 'paginator', 'templateTypeList'));
     }
 
     /**

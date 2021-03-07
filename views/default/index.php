@@ -14,6 +14,7 @@ use Yiisoft\Html\Html;
 
 /** @var Yiisoft\Yii\WebView $this */
 /** @var Mailery\Widget\Search\Form\SearchForm $searchForm */
+/** @var Mailery\Template\Model\TemplateTypeList $templateTypeList */
 /** @var Yiisoft\Aliases\Aliases $aliases */
 /** @var Yiisoft\Router\UrlGeneratorInterface $urlGenerator */
 /** @var Yiisoft\Data\Reader\DataReaderInterface $dataReader*/
@@ -40,10 +41,10 @@ $this->setTitle('All templates');
                         <?= Icon::widget()->name('plus')->options(['class' => 'mr-1']); ?>
                         Add new template
                     </template>
-                    <?php foreach ($templateTypes as $templateType) {
+                    <?php foreach ($templateTypeList as $templateType) {
                         echo Html::tag(
                             'b-dropdown-item',
-                            $templateType->getShortLabel(),
+                            $templateType->getCreateLabel(),
                             [
                                 'href' => $urlGenerator->generate($templateType->getCreateRouteName(), $templateType->getCreateRouteParams()),
                             ]

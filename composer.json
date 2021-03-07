@@ -47,7 +47,6 @@
         "config-plugin": {
             "params": "config/params.php",
             "common": "config/common.php",
-            "providers": "config/providers.php",
             "providers-web": "config/providers-web.php"
         }
     },

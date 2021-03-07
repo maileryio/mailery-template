@@ -13,14 +13,14 @@ declare(strict_types=1);
 use Yiisoft\Router\UrlGeneratorInterface;
 
 return [
-    'maileryio/mailery-template' => [
-        'types' => [],
-    ],
-
     'yiisoft/yii-cycle' => [
         'annotated-entity-paths' => [
             '@vendor/maileryio/mailery-template/src/Entity',
         ],
+    ],
+
+    'maileryio/mailery-template' => [
+        'types' => [],
     ],
 
     'maileryio/mailery-menu-sidebar' => [

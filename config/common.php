@@ -10,17 +10,18 @@ declare(strict_types=1);
  * @copyright Copyright (c) 2020, Mailery (https://mailery.io/)
  */
 
-use Mailery\Template\Provider\TemplateTypeConfigs;
 use Mailery\Template\Entity\Template;
 use Mailery\Template\Repository\TemplateRepository;
 use Cycle\ORM\ORMInterface;
 use Psr\Container\ContainerInterface;
+use Mailery\Template\Model\TemplateTypeList;
 
 return [
-    TemplateTypeConfigs::class => static function () use ($params) {
-        $configs = $params['maileryio/mailery-template']['types'] ?? [];
-        return new TemplateTypeConfigs($configs);
-    },
+    TemplateTypeList::class => [
+        '__construct()' => [
+            'elements' => $params['maileryio/mailery-template']['types'],
+        ],
+    ],
 
     TemplateRepository::class => static function (ContainerInterface $container) {
         return $container

@@ -79,6 +79,12 @@ $this->setTitle('All templates');
                             $urlGenerator->generate($data->getViewRouteName(), $data->getViewRouteParams())
                         );
                     }),
+                (new DataColumn())
+                    ->header('Type')
+                    ->content(function (Template $data, int $index) use ($templateTypeList) {
+                        $templateType = $templateTypeList->findByEntity($data);
+                        return $templateType ? $templateType->getLabel() : null;
+                    }),
                 (new ActionColumn())
                     ->contentOptions([
                         'style' => 'width: 80px;',

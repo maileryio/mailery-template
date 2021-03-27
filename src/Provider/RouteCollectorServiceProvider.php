@@ -17,14 +17,14 @@ final class RouteCollectorServiceProvider extends ServiceProvider
         $collector = $container->get(RouteCollectorInterface::class);
 
         $collector->addGroup(
-            Group::create(
-                '/brand/{brandId:\d+}',
-                [
-                    Route::get('/templates', [DefaultController::class, 'index'])
-                        ->name('/template/default/index'),
-                    Route::delete('/template/default/delete/{id:\d+}', [DefaultController::class, 'delete'])
-                        ->name('/template/default/delete'),
-                ]
+            Group::create('/brand/{brandId:\d+}')
+                ->routes(
+                    Route::get('/templates')
+                        ->name('/template/default/index')
+                        ->action([DefaultController::class, 'index']),
+                    Route::delete('/template/default/delete/{id:\d+}')
+                        ->name('/template/default/delete')
+                        ->action([DefaultController::class, 'delete'])
             )
         );
     }

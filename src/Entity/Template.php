@@ -12,9 +12,7 @@ declare(strict_types=1);
 
 namespace Mailery\Template\Entity;
 
-use RuntimeException;
 use Mailery\Brand\Entity\Brand;
-use Mailery\Common\Entity\RoutableEntityInterface;
 
 /**
  * @Cycle\Annotated\Annotation\Entity(
@@ -23,7 +21,7 @@ use Mailery\Common\Entity\RoutableEntityInterface;
  *      mapper = "Mailery\Template\Mapper\DefaultMapper"
  * )
  */
-abstract class Template implements RoutableEntityInterface
+abstract class Template
 {
     /**
      * @Cycle\Annotated\Annotation\Column(type = "primary")
@@ -106,69 +104,5 @@ abstract class Template implements RoutableEntityInterface
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEditRouteName(): ?string
-    {
-        throw new RuntimeException('Must be implemented in nested.');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEditRouteParams(): array
-    {
-        throw new RuntimeException('Must be implemented in nested.');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getViewRouteName(): ?string
-    {
-        throw new RuntimeException('Must be implemented in nested.');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getViewRouteParams(): array
-    {
-        throw new RuntimeException('Must be implemented in nested.');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPreviewRouteName(): ?string
-    {
-        throw new RuntimeException('Must be implemented in nested.');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPreviewRouteParams(): array
-    {
-        throw new RuntimeException('Must be implemented in nested.');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDeleteRouteName(): ?string
-    {
-        return '/template/default/delete';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDeleteRouteParams(): array
-    {
-        return ['id' => $this->getId()];
     }
 }

@@ -15,6 +15,6 @@ final class TemplateTypeList extends ArrayCollection
     {
         return $this->filter(function (TemplateTypeInterface $senderType) use($sender) {
             return $senderType->isEntitySameType($sender);
-        })->first() ?? null;
+        })->first() ?: null;
     }
 }

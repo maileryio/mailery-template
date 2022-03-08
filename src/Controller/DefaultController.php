@@ -96,13 +96,13 @@ final class DefaultController
     {
         $templateId = $request->getAttribute('id');
         if (empty($templateId) || ($template = $this->templateRepo->findByPK($templateId)) === null) {
-            return $this->responseFactory->createResponse(404);
+            return $this->responseFactory->createResponse(Status::NOT_FOUND);
         }
 
         $templateCrudService->delete($template);
 
         return $this->responseFactory
-            ->createResponse(302)
-            ->withHeader('Location', $urlGenerator->generate('/template/default/index'));
+            ->createResponse(Status::SEE_OTHER)
+            ->withHeader(Header::LOCATION, $urlGenerator->generate('/template/default/index'));
     }
 }

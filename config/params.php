@@ -14,7 +14,7 @@ use Yiisoft\Router\UrlGeneratorInterface;
 
 return [
     'yiisoft/yii-cycle' => [
-        'annotated-entity-paths' => [
+        'entity-paths' => [
             '@vendor/maileryio/mailery-template/src/Entity',
         ],
     ],

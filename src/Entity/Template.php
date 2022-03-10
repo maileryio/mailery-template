@@ -13,33 +13,32 @@ declare(strict_types=1);
 namespace Mailery\Template\Entity;
 
 use Mailery\Brand\Entity\Brand;
+use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Relation\BelongsTo;
+use Mailery\Template\Repository\TemplateRepository;
+use Mailery\Template\Mapper\DefaultMapper;
+use Cycle\Annotated\Annotation\Inheritance\DiscriminatorColumn;
 
-/**
- * @Cycle\Annotated\Annotation\Entity(
- *      table = "templates",
- *      repository = "Mailery\Template\Repository\TemplateRepository",
- *      mapper = "Mailery\Template\Mapper\DefaultMapper"
- * )
- */
+#[Entity(
+    table: 'templates',
+    repository: TemplateRepository::class,
+    mapper: DefaultMapper::class
+)]
+#[DiscriminatorColumn(name: 'type')]
 abstract class Template
 {
-    /**
-     * @Cycle\Annotated\Annotation\Column(type = "primary")
-     * @var int|null
-     */
-    protected $id;
+    #[Column(type: 'primary')]
+    protected int $id;
 
-    /**
-     * @Cycle\Annotated\Annotation\Relation\BelongsTo(target = "Mailery\Brand\Entity\Brand", nullable = false)
-     * @var Brand
-     */
-    protected $brand;
+    #[BelongsTo(target: Brand::class)]
+    protected Brand $brand;
 
-    /**
-     * @Cycle\Annotated\Annotation\Column(type = "string(255)")
-     * @var string
-     */
-    protected $name;
+    #[Column(type: 'string(255)')]
+    protected string $name;
+
+    #[Column(type: 'string(255)')]
+    protected string $type;
 
     /**
      * @return string

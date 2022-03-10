@@ -8,15 +8,33 @@ use Cycle\ORM\Select\QueryBuilder;
 use Cycle\ORM\Select\Repository;
 use Mailery\Brand\Entity\Brand;
 use Mailery\Template\Entity\Template;
-use Yiisoft\Yii\Cycle\Data\Reader\EntityReader;
 use Mailery\Template\Filter\TemplateFilter;
 use Yiisoft\Data\Paginator\OffsetPaginator;
 use Yiisoft\Data\Paginator\PaginatorInterface;
 use Yiisoft\Data\Reader\Sort;
 use Yiisoft\Data\Reader\DataReaderInterface;
+use Mailery\Cycle\Mapper\Data\Reader\InheritanceDataReader;
+use Cycle\ORM\ORMInterface;
+use Cycle\ORM\Select;
 
 final class TemplateRepository extends Repository
 {
+    /**
+     * @var ORMInterface
+     */
+    private ORMInterface $orm;
+
+    /**
+     * @param ORMInterface $orm
+     * @param Select $select
+     */
+    public function __construct(ORMInterface $orm, Select $select)
+    {
+        $this->orm = $orm;
+
+        parent::__construct($select);
+    }
+
     /**
      * @param array $scope
      * @param array $orderBy
@@ -24,7 +42,10 @@ final class TemplateRepository extends Repository
      */
     public function getDataReader(array $scope = [], array $orderBy = []): DataReaderInterface
     {
-        return new EntityReader($this->select()->where($scope)->orderBy($orderBy));
+        return new InheritanceDataReader(
+            $this->orm,
+            $this->select()->where($scope)->orderBy($orderBy)
+        );
     }
 
     /**

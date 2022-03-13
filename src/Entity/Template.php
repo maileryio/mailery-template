@@ -17,13 +17,22 @@ use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
 use Mailery\Template\Repository\TemplateRepository;
-use Mailery\Template\Mapper\DefaultMapper;
+use Mailery\Activity\Log\Mapper\LoggableMapper;
 use Cycle\Annotated\Annotation\Inheritance\DiscriminatorColumn;
+use Cycle\ORM\Entity\Behavior;
 
 #[Entity(
     table: 'templates',
     repository: TemplateRepository::class,
-    mapper: DefaultMapper::class
+    mapper: LoggableMapper::class
+)]
+#[Behavior\CreatedAt(
+    field: 'createdAt',
+    column: 'created_at',
+)]
+#[Behavior\UpdatedAt(
+    field: 'updatedAt',
+    column: 'updated_at',
 )]
 #[DiscriminatorColumn(name: 'type')]
 abstract class Template
@@ -39,6 +48,12 @@ abstract class Template
 
     #[Column(type: 'string(255)')]
     protected string $type;
+
+    #[Column(type: 'datetime')]
+    protected \DateTimeImmutable $createdAt;
+
+    #[Column(type: 'datetime', nullable: true)]
+    protected ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @return string

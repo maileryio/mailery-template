@@ -3,7 +3,6 @@
 use Mailery\Activity\Log\Widget\ActivityLogLink;
 use Mailery\Icon\Icon;
 use Mailery\Template\Entity\Template;
-use Mailery\Template\Module;
 use Mailery\Widget\Dataview\Columns\ActionColumn;
 use Mailery\Widget\Dataview\Columns\DataColumn;
 use Mailery\Widget\Dataview\GridView;
@@ -34,7 +33,7 @@ $this->setTitle('All templates');
                     <?= ActivityLogLink::widget()
                         ->tag('b-dropdown-item')
                         ->label('Activity log')
-                        ->module(Module::NAME); ?>
+                        ->group('template'); ?>
                 </b-dropdown>
                 <b-dropdown right size="sm" variant="primary" class="mx-sm-1 mb-2">
                     <template v-slot:button-content>

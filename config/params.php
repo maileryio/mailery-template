@@ -41,6 +41,9 @@ return [
                         ],
                     ],
                 ],
+                'activeRouteNames' => [
+                    '/template/default/index',
+                ],
             ],
         ],
     ],

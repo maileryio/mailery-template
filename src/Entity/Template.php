@@ -21,6 +21,9 @@ use Mailery\Activity\Log\Mapper\LoggableMapper;
 use Cycle\Annotated\Annotation\Inheritance\DiscriminatorColumn;
 use Cycle\ORM\Entity\Behavior;
 
+/**
+* This doc block required for STI/JTI
+*/
 #[Entity(
     table: 'templates',
     repository: TemplateRepository::class,

@@ -27,7 +27,7 @@ use Cycle\ORM\Entity\Behavior;
 #[Entity(
     table: 'templates',
     repository: TemplateRepository::class,
-    mapper: LoggableMapper::class
+    mapper: LoggableMapper::class,
 )]
 #[Behavior\CreatedAt(
     field: 'createdAt',

@@ -2,8 +2,15 @@
 
 namespace Mailery\Template\Model;
 
+use Mailery\Template\Entity\Template;
+
 interface TemplateTypeInterface
 {
+    /**
+     * @return string
+     */
+    public function getName(): string;
+
     /**
      * @return string
      */
@@ -25,8 +32,8 @@ interface TemplateTypeInterface
     public function getCreateRouteParams(): array;
 
     /**
-     * @param object $entity
+     * @param Template $entity
      * @return bool
      */
-    public function isEntitySameType(object $entity): bool;
+    public function isEntitySameType(Template $entity): bool;
 }

@@ -16,7 +16,10 @@ use Mailery\Widget\Search\Model\SearchByList;
 use Mailery\Template\Search\TemplateSearchBy;
 use Mailery\Template\Filter\TemplateFilter;
 use Mailery\Template\Model\TemplateTypeList;
+use Yiisoft\Router\CurrentRoute;
 use Yiisoft\Router\UrlGeneratorInterface as UrlGenerator;
+use Yiisoft\Http\Status;
+use Yiisoft\Http\Header;
 
 final class DefaultController
 {
@@ -87,14 +90,14 @@ final class DefaultController
     }
 
     /**
-     * @param Request $request
+     * @param CurrentRoute $currentRoute
      * @param TemplateCrudService $templateCrudService
      * @param UrlGenerator $urlGenerator
      * @return Response
      */
-    public function delete(Request $request, TemplateCrudService $templateCrudService, UrlGenerator $urlGenerator): Response
+    public function delete(CurrentRoute $currentRoute, TemplateCrudService $templateCrudService, UrlGenerator $urlGenerator): Response
     {
-        $templateId = $request->getAttribute('id');
+        $templateId = $currentRoute->getArgument('id');
         if (empty($templateId) || ($template = $this->templateRepo->findByPK($templateId)) === null) {
             return $this->responseFactory->createResponse(Status::NOT_FOUND);
         }

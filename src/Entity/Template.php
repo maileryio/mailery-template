@@ -49,6 +49,9 @@ abstract class Template
     #[Column(type: 'string(255)')]
     protected string $name;
 
+    #[Column(type: 'text', nullable: true)]
+    protected ?string $description = null;
+
     #[Column(type: 'string(255)')]
     protected string $type;
 
@@ -118,5 +121,32 @@ abstract class Template
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return self
+     */
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getUpdatedAt(): \DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 }

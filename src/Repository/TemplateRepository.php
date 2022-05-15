@@ -62,6 +62,21 @@ final class TemplateRepository extends Repository
     }
 
     /**
+     * @param Template $template
+     * @return self
+     */
+    public function withSameType(Template $template): self
+    {
+        $repo = clone $this;
+        $repo->select
+            ->andWhere([
+                'type' => $template->getType(),
+            ]);
+
+        return $repo;
+    }
+
+    /**
      * @param string $name
      * @param Template|null $exclude
      * @return Template|null

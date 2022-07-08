@@ -2,24 +2,18 @@
 
 namespace Mailery\Template\Service;
 
-use Cycle\ORM\ORMInterface;
-use Cycle\ORM\Transaction;
+use Cycle\ORM\EntityManagerInterface;
 use Mailery\Template\Entity\Template;
+use Yiisoft\Yii\Cycle\Data\Writer\EntityWriter;
 
 class TemplateCrudService
 {
     /**
-     * @var ORMInterface
+     * @param EntityManagerInterface $entityManager
      */
-    private ORMInterface $orm;
-
-    /**
-     * @param ORMInterface $orm
-     */
-    public function __construct(ORMInterface $orm)
-    {
-        $this->orm = $orm;
-    }
+    public function __construct(
+        private EntityManagerInterface $entityManager
+    ) {}
 
     /**
      * @param Template $template
@@ -27,9 +21,7 @@ class TemplateCrudService
      */
     public function delete(Template $template): bool
     {
-        $tr = new Transaction($this->orm);
-        $tr->delete($template);
-        $tr->run();
+        (new EntityWriter($this->entityManager))->delete($template);
 
         return true;
     }

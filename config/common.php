@@ -15,6 +15,8 @@ use Mailery\Template\Repository\TemplateRepository;
 use Cycle\ORM\ORMInterface;
 use Psr\Container\ContainerInterface;
 use Mailery\Template\Model\TemplateTypeList;
+use Mailery\Template\Renderer\BodyRenderer;
+use Mailery\Template\Renderer\BodyRendererInterface;
 
 return [
     TemplateTypeList::class => [
@@ -28,4 +30,8 @@ return [
             ->get(ORMInterface::class)
             ->getRepository(Template::class);
     },
+
+    BodyRendererInterface::class => [
+        'class' => BodyRenderer::class,
+    ],
 ];

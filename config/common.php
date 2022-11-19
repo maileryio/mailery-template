@@ -15,10 +15,24 @@ use Mailery\Template\Repository\TemplateRepository;
 use Cycle\ORM\ORMInterface;
 use Psr\Container\ContainerInterface;
 use Mailery\Template\Model\TemplateTypeList;
-use Mailery\Template\Renderer\BodyRenderer;
-use Mailery\Template\Renderer\BodyRendererInterface;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
+use Yiisoft\Aliases\Aliases;
+
+/** @var array $params */
 
 return [
+    Environment::class => static function (Aliases $aliases) use($params) {
+        $twig = new Environment(
+            new ArrayLoader(),
+            [
+                'cache' => $aliases->get($params['maileryio/mailery-template']['rendererCacheDirectory']),
+                'charset' => 'utf-8',
+            ]
+        );
+        return $twig;
+    },
+
     TemplateTypeList::class => [
         '__construct()' => [
             'elements' => $params['maileryio/mailery-template']['types'],
@@ -30,8 +44,4 @@ return [
             ->get(ORMInterface::class)
             ->getRepository(Template::class);
     },
-
-    BodyRendererInterface::class => [
-        'class' => BodyRenderer::class,
-    ],
 ];

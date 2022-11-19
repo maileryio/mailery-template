@@ -7,6 +7,7 @@ use Mailery\Widget\Link\Link;
 use Mailery\Widget\Search\Widget\SearchWidget;
 use Yiisoft\Html\Html;
 use Yiisoft\Yii\DataView\GridView;
+use Mailery\Web\Vue\Directive;
 
 /** @var Yiisoft\Yii\WebView $this */
 /** @var Mailery\Widget\Search\Form\SearchForm $searchForm */
@@ -81,13 +82,13 @@ $this->setTitle('All templates');
                     ->columns([
                         [
                             'label()' => ['Name'],
-                            'value()' => [fn (Template $model) => Html::a($model->getName(), $url->generate($model->getViewRouteName(), $model->getViewRouteParams()))],
+                            'value()' => [fn (Template $model) => Html::a(Directive::pre($model->getName()), $url->generate($model->getViewRouteName(), $model->getViewRouteParams()))],
                         ],
                         [
                             'label()' => ['Type'],
                             'value()' => [static function (Template $model) use ($templateTypeList) {
                                 $templateType = $templateTypeList->findByEntity($model);
-                                return $templateType ? $templateType->getLabel() : null;
+                                return $templateType ? Directive::pre($templateType->getLabel()) : null;
                             }],
                         ],
                                     [

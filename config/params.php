@@ -21,6 +21,7 @@ return [
 
     'maileryio/mailery-template' => [
         'types' => [],
+        'rendererCacheDirectory' => '@runtime/cache/twig',
     ],
 
     'maileryio/mailery-menu-sidebar' => [

@@ -16,6 +16,8 @@ use Cycle\ORM\ORMInterface;
 use Psr\Container\ContainerInterface;
 use Mailery\Template\Model\TemplateTypeList;
 use Twig\Environment;
+use Twig\Extension\SandboxExtension;
+use Twig\Sandbox\SecurityPolicy;
 use Twig\Loader\ArrayLoader;
 use Yiisoft\Aliases\Aliases;
 
@@ -30,6 +32,9 @@ return [
                 'charset' => 'utf-8',
             ]
         );
+
+        $twig->addExtension(new SandboxExtension(new SecurityPolicy()));
+
         return $twig;
     },
 

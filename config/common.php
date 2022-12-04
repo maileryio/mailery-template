@@ -28,7 +28,8 @@ return [
         $twig = new Environment(
             new ArrayLoader(),
             [
-                'cache' => $aliases->get($params['maileryio/mailery-template']['rendererCacheDirectory']),
+                // cache disabled due to TemplateVariablesVisitor not working correctly
+//                'cache' => $aliases->get($params['maileryio/mailery-template']['rendererCacheDirectory']),
                 'charset' => 'utf-8',
             ]
         );

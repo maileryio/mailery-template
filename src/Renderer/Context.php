@@ -3,15 +3,12 @@
 namespace Mailery\Template\Renderer;
 
 use Mailery\Template\Renderer\ContextInterface;
-use Mailery\Template\Renderer\ContextObserverInterface;
+use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Strings\StringHelper;
+use Yiisoft\Strings\Inflector;
 
 class Context implements ContextInterface
 {
-
-    /**
-     * @var ContextObserverInterface|null
-     */
-    private ?ContextObserverInterface $observer;
 
     /**
      * @param array $params
@@ -21,14 +18,29 @@ class Context implements ContextInterface
     ) {}
 
     /**
-     * @inheritdoc
+     * @param string $key
+     * @return mixed
      */
-    public function withObserver(ContextObserverInterface $observer): self
+    public function get(string $key): mixed
     {
-        $new = clone $this;
-        $new->observer = $observer;
+        $params = $this->toArray();
+        $parsedPath = StringHelper::parsePath($key);
 
-        return $new;
+        $result = null;
+
+        foreach($parsedPath as $key) {
+            if (is_array($params)) {
+                $params = $result = $params[$key] ?? null;
+            } else if (is_object($params)) {
+                $methodName = 'get' . (new Inflector())->toPascalCase($key);
+
+                if (is_callable([$params, $methodName])) {
+                    $params = $result = $params->$methodName();
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -50,7 +62,7 @@ class Context implements ContextInterface
      */
     public function has(string $key): bool
     {
-        return isset($this->params[$key]);
+        return $this->get($key) !== null;
     }
 
     /**
@@ -58,15 +70,6 @@ class Context implements ContextInterface
      */
     public function toArray(): array
     {
-        if ($this->observer !== null) {
-            return array_map(
-                function ($param) {
-                    return $this->observer->observe($param);
-                },
-                $this->params
-            );
-        }
-
         return $this->params;
     }
 

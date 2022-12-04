@@ -3,6 +3,7 @@
 namespace Mailery\Template\Renderer;
 
 use Symfony\Component\Mime\Message;
+use Twig\NodeVisitor\NodeVisitorInterface;
 
 interface BodyRendererInterface
 {
@@ -18,5 +19,11 @@ interface BodyRendererInterface
      * @return self
      */
     public function withContext(ContextInterface $context): self;
+
+    /**
+     * @param NodeVisitorInterface $visitor
+     * @return self
+     */
+    public function withNodeVisitor(NodeVisitorInterface $visitor): self;
 
 }

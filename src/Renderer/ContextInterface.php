@@ -2,23 +2,21 @@
 
 namespace Mailery\Template\Renderer;
 
-use Mailery\Template\Renderer\ContextObserverInterface;
-
 interface ContextInterface
 {
 
     /**
-     * @param ContextObserverInterface $observer
-     * @return self
+     * @param string $key
+     * @return mixed
      */
-    public function withObserver(ContextObserverInterface $observer): self;
+    public function get(string $key): mixed;
 
     /**
      * @param string $key
-     * @param mixed $param
+     * @param mixed $value
      * @return self
      */
-    public function add(string $key, mixed $param): self;
+    public function add(string $key, mixed $value): self;
 
     /**
      * @param string $key

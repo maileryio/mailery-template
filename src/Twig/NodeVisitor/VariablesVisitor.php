@@ -12,7 +12,7 @@ use Twig\Node\Expression\FilterExpression;
 use Twig\Node\Expression\FunctionExpression;
 use Twig\Node\Expression\GetAttrExpression;
 
-class TemplateVariablesVisitor implements NodeVisitorInterface
+class VariablesVisitor implements NodeVisitorInterface
 {
 
     /**

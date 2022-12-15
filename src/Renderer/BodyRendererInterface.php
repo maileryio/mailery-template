@@ -24,6 +24,6 @@ interface BodyRendererInterface
      * @param NodeVisitorInterface $visitor
      * @return self
      */
-    public function withNodeVisitor(NodeVisitorInterface $visitor): self;
+    public function addNodeVisitor(NodeVisitorInterface $visitor): self;
 
 }

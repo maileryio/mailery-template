@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Mailery\Template\Tests\Twig\NodeVisitor;
 
-use Mailery\Template\Twig\NodeVisitor\TemplateVariablesVisitor;
+use Mailery\Template\Twig\NodeVisitor\VariablesVisitor;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
-class TemplateVariablesVisitorTest extends TestCase
+class VariablesVisitorTest extends TestCase
 {
 
     /**
@@ -18,9 +18,9 @@ class TemplateVariablesVisitorTest extends TestCase
     private Environment $twig;
 
     /**
-     * @var TemplateVariablesVisitor
+     * @var VariablesVisitor
      */
-    private TemplateVariablesVisitor $visitor;
+    private VariablesVisitor $visitor;
 
     /**
      * @return void
@@ -34,7 +34,7 @@ class TemplateVariablesVisitorTest extends TestCase
             ]
         );
 
-        $this->visitor = new TemplateVariablesVisitor();
+        $this->visitor = new VariablesVisitor();
 
         $this->twig->addNodeVisitor($this->visitor);
     }

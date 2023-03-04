@@ -16,28 +16,23 @@ use Cycle\ORM\ORMInterface;
 use Psr\Container\ContainerInterface;
 use Mailery\Template\Model\TemplateTypeList;
 use Twig\Environment;
-use Twig\Extension\SandboxExtension;
-use Twig\Sandbox\SecurityPolicy;
 use Twig\Loader\ArrayLoader;
-use Yiisoft\Aliases\Aliases;
+use Yiisoft\Definitions\Reference;
 
 /** @var array $params */
 
 return [
-    Environment::class => static function (Aliases $aliases) use($params) {
-        $twig = new Environment(
-            new ArrayLoader(),
-            [
+    Environment::class => [
+        '__construct()' => [
+            'loader' => Reference::to(ArrayLoader::class),
+            'options' => [
                 // cache disabled due to TemplateVariablesVisitor not working correctly
 //                'cache' => $aliases->get($params['maileryio/mailery-template']['rendererCacheDirectory']),
                 'charset' => 'utf-8',
-            ]
-        );
-
-        $twig->addExtension(new SandboxExtension(new SecurityPolicy()));
-
-        return $twig;
-    },
+            ],
+        ],
+        'setExtensions()' => [$params['maileryio/mailery-template']['twig']['extensions']],
+    ],
 
     TemplateTypeList::class => [
         '__construct()' => [

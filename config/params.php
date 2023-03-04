@@ -11,6 +11,9 @@ declare(strict_types=1);
  */
 
 use Yiisoft\Router\UrlGeneratorInterface;
+use Yiisoft\Definitions\DynamicReference;
+use Twig\Extension\SandboxExtension;
+use Twig\Sandbox\SecurityPolicy;
 
 return [
     'yiisoft/yii-cycle' => [
@@ -21,6 +24,11 @@ return [
 
     'maileryio/mailery-template' => [
         'types' => [],
+        'twig' => [
+            'extensions' => [
+                DynamicReference::to(static fn () => new SandboxExtension(new SecurityPolicy()))
+            ],
+        ],
         'rendererCacheDirectory' => '@runtime/cache/twig',
     ],
 
